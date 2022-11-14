@@ -1,0 +1,207 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"scopeName": "source.uc",
+	"name": "ND-110 MicroCode",		
+	"patterns": [
+		{ "include" :"#comments" },
+		{ "include" :"#labels" },
+		{ "include" :"#opcodes" },
+		{ "include" :"#end" },
+		{ "include" :"#number" }		
+	],
+	"repository": {
+		"opcodes": {
+			"patterns": [		
+				{ "include": "#AB" }, 
+				{ "include": "#PIC" }, 
+				{ "include": "#ALU" },
+				{ "include": "#STS" }, 
+				{ "include": "#CRY" }, 
+				{ "include": "#MIS" }, 
+				{ "include": "#IDBS" }, 
+				{ "include": "#COMM" }, 
+				{ "include": "#TF" }, 
+				{ "include": "#COND" }, 
+				{ "include": "#SPECIAL" }
+			]
+		},		
+		"comments": {
+			"patterns": [
+				{
+				"match": "(%).*$",
+				"name": "comment.uc"
+				}
+			]
+		},
+		"labels": {
+			"patterns": [
+				{
+				"match": "^(.+:)",
+				"name": "support.function.uc"
+				}
+			]
+		},
+		"end": {
+			"patterns": [
+				{
+					"match": "\\;",
+					"name": "decorator.endof.microcode"
+				}
+			]
+		},
+
+		"number": {
+			"patterns": [
+				{
+					"match": "#?[0-9]+\\b",
+					"name": "constant.numeric.uc"
+				}
+			]
+		},
+		"AB": {
+			"patterns" :[
+				{
+					"match": "(A,Z|A,D|A,P|A,B|A,L|A,A|A,T|A,X|A,STS|A,R1|A,R2|A,R3|A,R4|A,R5|A,R6|A,R7|A,PIL|A,REG|A,SRCE|A,LC)\\b",
+					"name":"keyword.a.uc"
+				},
+				{
+					"match": "\\b(A,0|A,1|A,2|A,3|A,4|A,5|A,6|A,7|A,10|A,11|A,12|A,13|A,14|A,15|A,16|A,17)\\b",
+					"name":"keyword.anum.uc"
+				},  
+				{
+				"match": "\\b(B,Z|B,D|B,P|B,B|B,L|B,A|B,T|B,X|B,STS|B,R1|B,R2|B,R3|B,R4|B,R5|B,R6|B,R7|B,DEST|B,SRCE|B,LC)\\b",
+				"name": "keyword.b.uc"
+				},
+				{
+					"match": "\\b(B,0|B,1|B,2|B,3|B,4|B,5|B,6|B,7|B,10|B,11|B,12|B,13|B,14|B,15|B,16|B,17)\\b",
+					"name": "keyword.bnum.uc"
+				},
+				{
+					"match": "\\b(AB,CDIGI|AB,UPPNR|AB,CURNR|AB,CNT10|AB,PRCHR|AB,TXT1|AB,TXT2|AB,SCRAM|AB,OCTNR|AB,DISPL|AB,OCTAD|AB,OCTA2|AB,DEPOS|AB,DUMPF|AB,RONLY|AB,WRTYP|AB,WRADR|AB,ACTLV|AB,PVL|AB,IIE|AB,PID|AB,PIE|AB,STATU|AB,OCTN2|AB,NUMBR|AB,OPR|AB,BRKPT|AB,SINGL|AB,BPFLG|AB,MACL|AB,LMP|AB,EXMOD|AB,MANIR|AB,SSAVE|AB,UCIL|AB,LCIL|AB,PGS|AB,STBNK|AB,STSAT|AB,CMBNK)\\b",
+					"name": "keyword.ab.uc"
+				}
+			]
+		},
+		"PIC" : {
+			"patterns":[
+				{
+					"match": "\\b(PIC,RSTS|PIC,MCL|PIC,MCLPID|PIC,RMSK|PIC,LOSTS|PIC,LMSK|PIC,MCLMSK|PIC,IOF|PIC,ION|PIC,MSTMSK|PIC,RVECT)\\b",
+					"name": "keyword.pic.uc"
+				}
+			]
+		},
+		"ALU" :{
+			"patterns": [
+				{
+					"match": "(ALUF,A\\+Q|ALUF,A\\+B|ALUF,D\\+A|ALUF,D\\+Q|ALUF,A\\+Q\\+1|ALUF,A\\+B\\+1|ALUF,D+A+1|ALUF,D+Q+1|ALUF,\\-Q\\-1|ALUF,\\-B\\-1|ALUF,\\-A\\-1|ALUF,\\-D\\-1|ALUF,O\\-A\\-1|ALUF,B\\-A\\-1|ALUF,A\\-D\\-1|ALUF,Q\\-D\\-1|ALUF,A\\-Q\\-1|ALUF,A\\-B\\-1|ALUF,D\\-A\\-1|ALUF,D\\-Q\\-1|ALUF,Q\\+1|ALUF,B\\+1|ALUF,A\\+1|ALUF,D\\+1|ALUF,Q\\-1|ALUF,B\\-1|ALUF,A\\-1|ALUF,D\\-1|ALUF,\\-Q|ALUF,\\-B|ALUF,\\-A|ALUF,\\-D|ALUF,Q\\-A|ALUF,B\\-A|ALUF,A\\-D|ALUF,Q\\-D|ALUF,A\\-Q|ALUF,A\\-B|ALUF,D\\-A|ALUF,D\\-Q)\\b",
+					"name": "keyword.aluf.1.uc"
+				},
+				{
+					"match": "(ALUF,ANDAQ|ALUF,ANDAB|ALUF,ANDDA|ALUF,ANDDQ|ALUF,ORAQ|ALUF,ORAB|ALUF,ORDA|ALUF,ORDQ|ALUF,XORAQ|ALUF,XORAB|ALUF,XORDA|ALUF,XORDQ|ALUF,XNORAQ|ALUF,XNORAB|ALUF,XNORDA|ALUF,XNORDQ|ALUF,ZERO|ALUF,INVQ|ALUF,INVB|ALUF,INVA|ALUF,INVD|ALUF,PASSQ|ALUF,PASSB|ALUF,PASSA|ALUF,PASSD|ALUF,MASKAQ|ALUF,MASKAB|ALUF,MASKDA|ALUF,MASKDQ)\\b",
+					"name": "keyword.aluf.2.uc"
+				},
+				{
+					"match": "(ALUF,Q|ALUF,B|ALUF,A|ALUF,D)\\b",
+					"name": "keyword.aluf.3.uc"
+				},
+				{
+					"match": "\\b(ALUD,Q|ALUD,NONE|ALUD,B,YA|ALUD,B|ALUD,SRD|ALUD,SRB|ALUD,SLD|ALUD,SLB)\\b",
+					"name": "keyword.alud.uc"
+				},
+				{
+					"match": "\\b(ALUM,FMU|ALUM,FDV|ALUM,IR|ALUM,MIC)\\b",
+					"name": "keyword.alum.uc"
+				}
+			]
+		},
+		"STS": {
+			"patterns": [
+				{
+					"match": "(STS,LO|STS,EA|STS,ES)\\b",
+					"name": "keyword.sts.uc"
+				}
+			]
+		},
+		"CRY": {
+			"patterns":[
+				{
+					"match": "(CRY,C|CRY,GPR)\\b",
+					"name": "keyword.cry.uc"
+				}
+			]
+		},
+		"MIS": {
+			"patterns":[			
+				{
+					"match": "(MIS,ROT|MIS,ZIN|MIS,LIN)\\b",
+					"name": "keyword.mis.uc"
+				}
+			]
+		},
+		"IDBS" : {
+			"patterns":[
+				{
+					"match": "\\b(IDBS,ALU|IDBS,BMG|IDBS,GPR|IDBS,DBR|IDBS,ARG|IDBS,REG|IDBS,STS|IDBS,BARG|IDBS,SWAP|IDBS,PEA|IDBS,PES|IDBS,AARG|IDBS,PIC|IDBS,IOR|IDBS,DSABL|IDBS,MIPANS|IDBS,MAPANS|IDBS,GPR,SEXT|IDBS,PGS|IDBS,CSR|IDBS,PCR|IDBS,ALD|IDBS,PANEL|IDBS,RCS|IDBS,PICVC|IDBS,LBR|IDBS,LA|IDBS,INR)\\b",
+					"name": "keyword.idbs.uc"
+				}
+			]
+		},
+		"COMM" :{
+			"patterns": [
+			{
+				"match": "(COMM,LDPIL|COMM,LDGPR|COMM,EWRF|COMM,CLIRQ|COMM,RSDA|COMM,TBSTR|COMM,LDPANC|COMM,LDPCR|COMM,SIOC|COMM,SLOW1|COMM,SLOW2|COMM,EPIC|COMM,SMPID|COMM,START|COMM,SSTOP|COMM,CLRTC|COMM,CLFF|COMM,LDLC|COMM,LDSEG|COMM,LDDOMI|COMM,LDPS|COMM,LDIRV|COMM,WCIHM|COMM,SSEMA|COMM,CCLR|COMM,LDEXM|COMM,IREAD,PT|COMM,IREAD,APT|COMM,MAP|COMM,CNEXT,NWP|COMM,CJMP,F15|COMM,CJMP,NF15|COMM,CJMP,F\\=0|COMM,CJMP,NF\\=0|COMM,CNEXT,SGR|COMM,CNEXT,NSGR|COMM,CNEXT,CRY|COMM,CNEXT,NCRY|COMM,CNEXT,F15|COMM,CNEXT,NF15|COMM,CNEXT,F\\=0|COMM,CNEXT,NF=0|COMM,JMP,\\*|COMM,JMP,B|COMM,JMP,I|COMM,JMP,X|COMM,JMP,XB|COMM,JMP,XI|COMM,LBCONT|COMM,CONTINUE|COMM,AREAD,\\*|COMM,AREAD,B|COMM,AREAD,I|COMM,AREAD,X|COMM,AREAD,XB|COMM,AREAD,XI|COMM,IREAD2|COMM,AREAD,NEXT|COMM,AWRITE,\\*|COMM,AWRITE,B|COMM,AWRITE,I|COMM,AWRITE,X|COMM,AWRITE,XB|COMM,AWRITE,XI|COMM,AWRITE,HOLD|COMM,AWRITE,NEXT|COMM,RDRQ,PT|COMM,RDRQ,APT|COMM,RDRQ,HOLD|COMM,EXRQ|COMM,WRRQ,PT|COMM,WRRQ,APT|COMM,WRRQ,HOLD|COMM,DERQ|COMM,ADCS|COMM,RWCS|COMM,WLBR|COMM,WALBR|COMM,IDENT|COMM,IOX)\\b",
+				"name": "keyword.comm.uc"
+			}
+			]
+		},
+		"TF" :{
+			"patterns": [
+				{
+					"match": "(T,JMP|T,JMP0-3|T,JMPAOPR|T,RETURN|T,NEXT|T,HOLD|T,POP|T,LOAD|T,PUSH|F,JMP|F,RETURN|F,NEXT|F,HOLD|F,POP|F,LOAD|F,PUSH)\\b",
+					"name": "keyword.tf.uc"
+				}
+			]
+		},
+		"COND" : {
+			"patterns": [
+				{
+				"match": "(COND,STP|COND,PXM|COND,OVF|COND,CRY|COND,F11|COND,F15|COND,F\\=0|COND,LC\\=0|COND,FETCH|COND,IRQ|COND,RESTR|COND,OOD|COND,DZD|COND,COND)\\b",
+				"name": "keyword.cond.uc"
+				}
+			]
+		},
+		"SPECIAL" :{
+			"patterns":[
+				{
+				"match": "(CONDENABL)\\b",
+				"name": "keyword.condenable.uc"
+				},
+				{
+					"match": "(CONT)\\b",
+					"name": "keyword.control.uc"
+				},
+				{
+				"match": "(XRF|LCOUNT)\\b",
+				"name": "keyword.special.uc"
+				}			
+			]
+		},
+		"numerics": {
+			"patterns": [		  
+				{
+				"match": "#?-?(0x|&)[0-9a-fA-F_]+\\b",
+				"name": "constant.numeric.hex.arm"
+				},
+				{
+				"match": "#?[0-7]+\\b",
+				"name": "constant.numeric.oct.uc"
+				},
+				{
+				"match": "#?0b[01]+\\b",
+				"name": "constant.numeric.bin.arm"
+				}
+			]
+		}	
+	}
+}	
+
